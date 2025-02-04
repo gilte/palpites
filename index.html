@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabela Jogo do Bicho</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            background: linear-gradient(to right, #141e30, #243b55);
+            color: white;
+            padding: 20px;
+        }
+        h2 {
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            max-width: 600px;
+            margin: auto;
+            border-collapse: collapse;
+            background: #fff;
+            color: #333;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+        }
+        th {
+            background: #007bff;
+            color: white;
+            font-size: 18px;
+        }
+        input {
+            width: 100px;
+            text-align: center;
+            border: 2px solid #007bff;
+            border-radius: 4px;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 8px;
+            color: #007bff;
+            background: #f0f8ff;
+            transition: 0.3s;
+        }
+        input:focus {
+            border-color: #0056b3;
+            outline: none;
+            background: #e6f0ff;
+        }
+    </style>
+</head>
+<body>
+    <h2>Tabela Jogo do Bicho</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Milhar</th>
+                <th>Bicho</th>
+                <th>Grupo</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input type="text" oninput="buscarBicho(this, 0)"></td>
+                <td id="bicho0"></td>
+                <td id="grupo0"></td>
+            </tr>
+            <tr>
+                <td><input type="text" oninput="buscarBicho(this, 1)"></td>
+                <td id="bicho1"></td>
+                <td id="grupo1"></td>
+            </tr>
+            <tr>
+                <td><input type="text" oninput="buscarBicho(this, 2)"></td>
+                <td id="bicho2"></td>
+                <td id="grupo2"></td>
+            </tr>
+            <tr>
+                <td><input type="text" oninput="buscarBicho(this, 3)"></td>
+                <td id="bicho3"></td>
+                <td id="grupo3"></td>
+            </tr>
+            <tr>
+                <td><input type="text" oninput="buscarBicho(this, 4)"></td>
+                <td id="bicho4"></td>
+                <td id="grupo4"></td>
+            </tr>
+            <tr>
+                <td id="milhar5"></td>
+                <td id="bicho5"></td>
+                <td id="grupo5"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        const bichos = {
+            1: "Avestruz",
+            2: "Águia",
+            3: "Burro",
+            4: "Borboleta",
+            5: "Cachorro",
+            6: "Cabra",
+            7: "Carneiro",
+            8: "Camelo",
+            9: "Cobra",
+            10: "Coelho",
+            11: "Cavalo",
+            12: "Elefante",
+            13: "Galo",
+            14: "Gato",
+            15: "Jacaré",
+            16: "Leão",
+            17: "Macaco",
+            18: "Porco",
+            19: "Pavão",
+            20: "Peru",
+            21: "Touro",
+            22: "Tigre",
+            23: "Urso",
+            24: "Veado",
+            25: "Vaca"
+        };
+
+        function buscarBicho(input, index) {
+            let milhar = input.value;
+            let dezena = parseInt(milhar.slice(-2)); // Pega os dois últimos dígitos
+            let grupo = Math.ceil(dezena / 4); // Define o grupo do bicho
+            
+            if (bichos[grupo]) {
+                document.getElementById(`bicho${index}`).textContent = bichos[grupo];
+                document.getElementById(`grupo${index}`).textContent = grupo;
+            } else {
+                document.getElementById(`bicho${index}`).textContent = "";
+                document.getElementById(`grupo${index}`).textContent = "";
+            }
+            calcularSextoPremio();
+        }
+
+        function calcularSextoPremio() {
+            let soma = 0;
+            for (let i = 0; i < 5; i++) {
+                let milhar = document.querySelectorAll("input")[i].value;
+                if (milhar) soma += parseInt(milhar);
+            }
+            let sextoMilhar = soma.toString().slice(-4); // Pega os últimos 4 dígitos
+            document.getElementById("milhar5").textContent = sextoMilhar;
+            let dezena = parseInt(sextoMilhar.slice(-2));
+            let grupo = Math.ceil(dezena / 4);
+            document.getElementById("bicho5").textContent = bichos[grupo] || "";
+            document.getElementById("grupo5").textContent = grupo || "";
+        }
+    </script>
+</body>
+</html>
